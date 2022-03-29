@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 777786191411590755}
   - component: {fileID: 777786191411590780}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: idle_player_basic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 777786193082681703}
   - component: {fileID: 777786193082681702}
   - component: {fileID: 777786193082681701}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy-0
   m_TagString: Enemy
   m_Icon: {fileID: 0}

@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // Move();
+       Move();
 
         //Check if bounds check exists and the object is off the bottom of the screne
         if(bndCheck != null && bndCheck.offDown)
@@ -65,5 +65,20 @@ public class Enemy : MonoBehaviour
         Vector3 temPos = pos;
         temPos.y -= speed * Time.deltaTime;
         pos = temPos;
+    }
+
+    void OnCollisionEnter(Collision coll)
+    {
+        GameObject otherGO = coll.gameObject;
+        if(otherGO.tag == "Projectile Hero")
+        {
+            Destroy(otherGO);
+            Destroy(gameObject);
+        }
+        else
+        {
+            print("Enemy hit by non-ProjectileHero: " + otherGO.name);
+        }
+
     }
 }

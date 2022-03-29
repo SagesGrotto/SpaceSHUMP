@@ -43,6 +43,9 @@ public class Hero : MonoBehaviour
     public float speed = 10;
     public float rollMult = -45;
     public float pitchMult = 30;
+    public float gameRestartDelay = 2f;
+    public GameObject projectilePrefab;
+    public float projectileSpeed = 40;
 
 
 
@@ -66,6 +69,7 @@ public class Hero : MonoBehaviour
             if (value < 0)
             {
                 Destroy(this.gameObject);
+                Main.SHIP.DelayedRestart(gameRestartDelay);
                 Debug.Log(gm.name);
                 gm.LostLife();
                 
@@ -107,13 +111,42 @@ public class Hero : MonoBehaviour
         //Rotate the ship for a more dynamic feel
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TempFire();
+        }
+
     }//end Update()
 
+    void TempFire()
+    {
+        GameObject projGO = Instantiate<GameObject>(projectilePrefab);
+        projGO.transform.position = transform.position;
+        Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
+        rigidB.velocity = Vector3.up * projectileSpeed;
+    }
 
     //Taking Damage
     private void OnTriggerEnter(Collider other)
     {
-  
+        Transform rootT = other.gameObject.transform.root;
+        GameObject go = rootT.gameObject;
+        //print("Triggered: " + go.name);
+        if (go == lastTriggerGo)
+        {
+            return;
+        }
+        lastTriggerGo = go;
+
+        if (go.tag == "Enemy")
+        {
+            _shieldLevel=-1;
+            Destroy(go);
+        } else
+        {
+            print("Triggered by non-Enemy: " + go.name);
+        }
+
 
 
     }//end OnTriggerEnter()
