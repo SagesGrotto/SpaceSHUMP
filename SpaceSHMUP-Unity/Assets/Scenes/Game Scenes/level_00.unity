@@ -513,7 +513,7 @@ MonoBehaviour:
   numberOfLives: 3
   resetLostLevel: 1
   defaultEndMessage: Game Over
-  looseMessage: You Loose
+  looseMessage: You Lose
   winMessage: You Win
   endMsg: 
   startScene: start_scene

@@ -1,9 +1,9 @@
 /**** 
- * Created by: Your Name
+ * Created by: Sage
  * Date Created: March 16, 2022
  * 
  * Last Edited by: Sage
- * Last Edited: March 16, 2022
+ * Last Edited: March 30, 2022
  * 
  * Description: Hero ship controller
 ****/
@@ -20,7 +20,7 @@ public class Hero : MonoBehaviour
 
     #region PlayerShip Singleton
     static public Hero SHIP; //refence GameManager
-   
+
     //Check to make sure only one gm of the GameManager is in the scene
     void CheckSHIPIsInScene()
     {
@@ -52,11 +52,11 @@ public class Hero : MonoBehaviour
     [Space(10)]
 
     private GameObject lastTriggerGo; //reference to the last triggering game object
-   
+
     [SerializeField] //show in inspector
     private float _shieldLevel = 1; //level for shields
     public int maxShield = 4; //maximum shield level
-    
+
     //method that acts as a field (property), if the property falls below zero the game object is desotryed
     public float shieldLevel
     {
@@ -69,10 +69,8 @@ public class Hero : MonoBehaviour
             if (value < 0)
             {
                 Destroy(this.gameObject);
-                Main.SHIP.DelayedRestart(gameRestartDelay);
                 Debug.Log(gm.name);
                 gm.LostLife();
-                
             }
 
         }
@@ -92,8 +90,8 @@ public class Hero : MonoBehaviour
         gm = GameManager.GM; //find the game manager
     }//end Start()
 
-        // Update is called once per frame (page 551)
-        void Update()
+    // Update is called once per frame (page 551)
+    void Update()
     {
 
         //player input
@@ -126,6 +124,11 @@ public class Hero : MonoBehaviour
         rigidB.velocity = Vector3.up * projectileSpeed;
     }
 
+    public void AddScore(int value)
+    {
+        gm.UpdateScore(value);
+    }
+
     //Taking Damage
     private void OnTriggerEnter(Collider other)
     {
@@ -140,9 +143,10 @@ public class Hero : MonoBehaviour
 
         if (go.tag == "Enemy")
         {
-            _shieldLevel=-1;
+            _shieldLevel--;
             Destroy(go);
-        } else
+        }
+        else
         {
             print("Triggered by non-Enemy: " + go.name);
         }

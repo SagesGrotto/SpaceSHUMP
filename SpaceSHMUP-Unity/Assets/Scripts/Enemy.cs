@@ -73,6 +73,7 @@ public class Enemy : MonoBehaviour
         if(otherGO.tag == "Projectile Hero")
         {
             Destroy(otherGO);
+            Hero.SHIP.AddScore(score);
             Destroy(gameObject);
         }
         else

@@ -2,7 +2,7 @@
  * Created by: Akram Taghavi-Burris
  * Date Created: Feb 23, 2022
  * 
- * Last Edited by: NA
+ * Last Edited by: Sage
  * Last Edited: Feb 26, 2022
  * 
  * Description: Basic GameManager Template
@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
         CheckGameState();
 
         //Outpot game state
-        Debug.Log("Game State " + gameState);
+        //Debug.Log("Game State " + gameState);
 
     }//end Update
 
@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
         //store the current scene
         currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
-        
+
         //SET ALL GAME LEVEL VARIABLES FOR START OF GAME
         lives = numberOfLives; //set the number of lives
         score = 0; //set starting score
@@ -266,8 +266,8 @@ public class GameManager : MonoBehaviour
 
     //GO TO THE NEXT LEVEL
     void NextLevel()
-    { 
-        
+    {
+
         //as long as our level count is not more than the amount of levels
         if (gameLevelsCount < gameLevels.Length)
         {
@@ -286,7 +286,7 @@ public class GameManager : MonoBehaviour
     }//end NextLevel()
 
     //Delayed Restart
-   
+
 
     //PLAYER LOST A LIFE
     public void LostLife()
@@ -295,15 +295,16 @@ public class GameManager : MonoBehaviour
         {
             GameOver(); //game is over
 
-        } 
+        }
         else
         {
             lives--; //subtract from lives reset level lost 
 
             //if this level resets when life is lost
-            if (resetLostLevel){
+            if (resetLostLevel)
+            {
                 numberOfLives = lives; //set lives left for level reset
-                
+
             }//end if (resetLostLevel)
 
         } // end elseif
@@ -314,7 +315,7 @@ public class GameManager : MonoBehaviour
     public void UpdateScore(int point = 0)
     { //This method manages the score on update. 
 
-        score += point; 
+        score += point;
 
         //if the score is more than the high score
         if (score > highScore)
@@ -348,8 +349,16 @@ public class GameManager : MonoBehaviour
         if (levelLost) { levelLost = false; SetGameState(GameState.LostLevel); }
 
         //test if player won
-        if (playerWon) { playerWon = false;  SetGameState(GameState.BeatLevel); }
+        if (playerWon) { playerWon = false; SetGameState(GameState.BeatLevel); }
 
     }//end RunTest()
 
+    public void DelayedRestart(float delay)
+    {
+        Invoke("Restart", delay);
+    }
+    public void Restart()
+    {
+        SceneManager.LoadScene("_Scene_0");
+    }
 }
